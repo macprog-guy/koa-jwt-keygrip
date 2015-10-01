@@ -1,0 +1,41 @@
+{
+  "name": "koa-jwt-keygrip",
+  "version": "0.2.1",
+  "description": "Koa authentication with optional scope based authorization using jwt-keygrip.",
+  "main": "./index.js",
+  "keywords": [
+    "npm",
+    "jwt",
+    "keygrip",
+    "authentication",
+    "authorization",
+    "scope",
+    "bearer",
+    "token"
+  ],
+  "homepage": "https://github.com/macprog-guy/koa-jwt-keygrip",
+  "author": {
+    "name": "Eric Methot",
+    "email": "eric@macprog.com",
+    "url": "https://github.com/macprog-guy/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/macprog-guy/koa-jwt-keygrip.git"
+  },
+  "bugs": {
+    "url": "http://github.com/macprog-guy/koa-jwt-keygrip/issues"
+  },
+  "scripts": {
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha -R spec --harmony -u bdd --recursive ./test"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "jwt-keygrip": "^0.2.2"
+  },
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "co": "^4.6.0",
+    "mocha": "^2.2.5"
+  }
+}
