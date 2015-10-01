@@ -1,7 +1,7 @@
 # Introduction
 
 koa-jwt-keygrip is Koa middleware for JWT based authentication with optional scope based authorization. 
-The implementation does not use keygrip.
+It's also possible to implement ACL.
 
 # Installation
 
@@ -49,7 +49,7 @@ app.get('/projects/:projectId', authProject, function*(){
 
 # API
 
-##### `constructor(String|Array<String> keys [, String algorithm] [, Object options])`
+##### `constructor(String|Array<String> keys [, String algorithm] [, Object options]) -> MiddlewareReturningFunction`
 
 Returns a middleware returning function whose default options are those specified in the constructor.
 
@@ -77,13 +77,56 @@ Returns a middleware returning function whose default options are those specifie
 	- `{String|false} session`: if a string then look for JWT in the session using this value as the key. If false then don't allow authentication using the session. Default is false. If true use in conjunction with CSRF and XSS protection.
 
 
-##### `middleware([String scope...] [,Object options])`
+<hr>
+##### `MiddlewareReturningFunction([String scope...] [,Object options])`
 
+Calling the constructor returns a middleware returning function. You can then call this function many times to create customized authentication middleware for various scenarios. If options are provided they override those given in the constructor.
 
 ```js
-var jwt = require('jwt-keygrip')('12345,54321,xxoxx,ooxoo')
+
+var koa     = require('koa'),
+	AuthJWT = require('koa-jwt-keygrip')
+
+app = koa()
+app.keys = process.env.JWT_SIGNING_KEYS
+
+var auth = jwt(app.keys)
+
+// These are all specific authentication and authorization middlewares
+var authenticated = auth(),
+	authAdminOnly = auth('admin'),
+	authProjectAccess = auth({scope: function*(credentials){
+		var ids yield /* Fetch the project IDs for to which this user has access */
+		return ids.map(function(id){ return 'project:'+id })
+	}})
+
+
 ```
 
 
 
-<hr>
+
+# License
+
+The MIT License (MIT)
+
+Copyright (c) 2015 Eric Methot
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+	

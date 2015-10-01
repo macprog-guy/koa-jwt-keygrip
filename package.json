@@ -1,6 +1,6 @@
 {
   "name": "koa-jwt-keygrip",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Koa authentication with optional scope based authorization using jwt-keygrip.",
   "main": "./index.js",
   "keywords": [
