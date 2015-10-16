@@ -111,7 +111,7 @@ function KoaJWTKeygrip(keys, algorithm, defaultOptions) {
 				if (typeof options.key === 'string')
 					this.state[options.key]
 				else
-					options.key.call(this, credentials)
+					options.key.call(this, credentials, token)
 
 
 				// Validate the scopes
