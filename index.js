@@ -185,8 +185,9 @@ function KoaJWTKeygrip(keys, algorithm, defaultOptions) {
 						break;
 
 					default:
+						status  = 500
+						message = 'Internal Error'
 						console.error(err.stack)
-						this.throw(500, 'Internal Error')
 				}
 
 				if (options.redirect) 
